@@ -32,7 +32,6 @@ lazy val root = project.in(file(".")).configs(IntegrationTest)
 Defaults.itSettings
 
 lazy val appProperties = settingKey[Config]("The application properties")
-//appProperties := ConfigFactory.parseFile(baseDirectory.value / "src/main/resources" / "application.conf").resolve()
 appProperties := ConfigFactory.parseFile((resourceDirectory in Compile).value / "application.conf").resolve()
 version := appProperties.value.getString("app.version")
 
@@ -47,22 +46,15 @@ lazy val slick = TaskKey[Seq[File]]("slick-codegen")
 lazy val slickCodeGenTask = (sourceManaged, dependencyClasspath in Compile, runner in Compile, streams) map { (dir, cp, r, s) =>
   val outputDir = (dir / "slick").getPath // place generated files in sbt's managed sources folder
 val url = "jdbc:postgresql://localhost/test"
-//val url = "jdbc:h2:mem:test;INIT=runscript from 'src/main/sql/create.sql'" // connection info for a pre-populated throw-away, in-memory db for this demo, which is freshly initialized on every run
-val jdbcDriver = "org.postgresql.Driver" //"org.h2.Driver"
+val jdbcDriver = "org.postgresql.Driver"
   val slickDriver =  "slick.driver.PostgresDriver"
-  val pkg = "demo"
-  val user = "psql_app"
+  val pkg = "com.example"
+  val user = appProperties.value.getString("")//  "psql_app"
   val password = "app_psql_pass"
   toError(r.run("slick.codegen.SourceCodeGenerator", cp.files, Array(slickDriver, jdbcDriver, url, outputDir, pkg, user, password), s.log))
   val fname = outputDir + "/demo/Tables.scala"
   Seq(file(fname))
 }
-
-//lazy val slickCodeGenTask = (scalaSource in Compile, dependencyClasspath in Compile, runner in Compile, streams) map { (dir, cp, r, s) =>
-//  toError(r.run("SlickCodeGenerator", cp.files, Array[String](), s.log))
-//  val f = new File("app/models/auto_generated/Models.scala")
-//  Seq(file(f.getAbsolutePath))
-//}
 slick <<= slickCodeGenTask
 
 Revolver.settings
