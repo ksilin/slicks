@@ -1,7 +1,5 @@
 package me.archdev.restapi.utils
 
-import java.util.Properties
-
 import org.flywaydb.core.Flyway
 
 trait Migration extends Config {

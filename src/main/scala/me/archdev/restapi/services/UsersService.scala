@@ -3,6 +3,7 @@ package me.archdev.restapi.services
 import me.archdev.restapi.models.db.UserEntityTable
 import me.archdev.restapi.models.{ UserEntityUpdate, UserEntity }
 import org.mindrot.jbcrypt.BCrypt
+import slick.profile.SqlStreamingAction
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
@@ -14,6 +15,11 @@ trait UsersService extends UserEntityTable {
   import driver.api._
 
   def getUsers(): Future[Seq[UserEntity]] = db.run(users.result)
+
+  def getPlain(): Future[Vector[String]] = {
+    val query: SqlStreamingAction[Vector[String], String, Effect] = sql"select username from users where id < 3".as[String]
+    db.run(query)
+  }
 
   def getUserById(id: Long): Future[Option[UserEntity]] = db.run(users.filter(_.id === id).result.headOption)
 
