@@ -10,9 +10,9 @@ import scala.concurrent.{Await, Future}
 import scala.concurrent.duration._
 import scala.util.{Failure, Success}
 
-class UsersServiceRoutlessTest extends BaseServiceTest with ScalaFutures {
+class UsersServiceDbTest extends BaseDbTest with ScalaFutures {
 
-  "Users service" should {
+  "Users " should {
 
     "retrieve users list" in {
       val users: Future[Seq[UserEntity]] = UsersService.getUsers()
