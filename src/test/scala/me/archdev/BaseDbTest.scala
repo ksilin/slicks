@@ -1,18 +1,17 @@
 package me.archdev
 
-import akka.event.{LoggingAdapter, NoLogging}
+import me.archdev.restapi.models.db._
 import me.archdev.restapi.models.{DragonEntity, TokenEntity, UserEntity}
 import me.archdev.restapi.utils.Migration
 import org.scalatest._
-
-import me.archdev.restapi.models.db._
+import org.slf4j.{Logger, LoggerFactory}
 
 import scala.concurrent.Await
 import scala.concurrent.duration._
 
 trait BaseDbTest extends WordSpec with Matchers with Migration
 with DragonEntityTable with TokenEntityTable {
-  protected val log: LoggingAdapter = NoLogging
+  protected val log: Logger = LoggerFactory.getLogger(this.getClass)
 
   val testUsers = Seq(
     UserEntity(Some(1), "Arhelmus", "test"),

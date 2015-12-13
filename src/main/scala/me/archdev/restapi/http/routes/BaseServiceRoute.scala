@@ -10,5 +10,5 @@ import scala.concurrent.ExecutionContext
 trait BaseServiceRoute extends Protocol with SprayJsonSupport with Config {
   protected implicit def executor: ExecutionContext
   protected implicit def materializer: ActorMaterializer
-  protected def log: LoggingAdapter
+//  protected def log: LoggingAdapter
 }

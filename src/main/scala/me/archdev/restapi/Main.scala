@@ -14,7 +14,7 @@ object Main extends App with Config with HttpService with Migration {
   private implicit val system = ActorSystem()
 
   override protected implicit val executor: ExecutionContext = system.dispatcher
-  override protected val log: LoggingAdapter = Logging(system, getClass)
+  protected val log: LoggingAdapter = Logging(system, getClass)
   override protected implicit val materializer: ActorMaterializer = ActorMaterializer()
 
   migrate()
