@@ -1,5 +1,7 @@
 package me.archdev
 
+import akka.actor.ActorSystem
+import akka.stream.ActorMaterializer
 import akka.stream.scaladsl.Source
 import me.archdev.restapi.models.UserEntity
 import me.archdev.restapi.services.UsersService
@@ -9,22 +11,26 @@ import slick.backend.DatabasePublisher
 import scala.concurrent.{Await, Future}
 import scala.concurrent.duration._
 import scala.util.{Failure, Success}
+import scala.concurrent.ExecutionContext.Implicits.global
+
 
 class UsersServiceDbTest extends BaseDbTest with ScalaFutures {
 
-  "Users " should {
+  private implicit val system = ActorSystem()
+  implicit val materializer: ActorMaterializer = ActorMaterializer()
+
+  "Users service" should {
 
     "retrieve users list" in {
       val users: Future[Seq[UserEntity]] = UsersService.getUsers()
       val userEntities: Seq[UserEntity] = Await.result(users, 10.seconds)
       log.info(s"users: $userEntities")
-      println(s"users: $userEntities")
     }
 
     "retrieve users stream" in {
       val users: DatabasePublisher[UserEntity] = UsersService.getUsersStream()
 
-      val printFuture = Source(users).runForeach( u => println(s"user: $u"))
+      val printFuture = Source(users).runForeach( u => log.info(s"user: $u"))
 
       Await.result(printFuture, 10.seconds)
     }
@@ -38,11 +44,8 @@ class UsersServiceDbTest extends BaseDbTest with ScalaFutures {
       val userNamesFuture: Future[Seq[String]] = UsersService.getPlain()
       val userNames: Seq[String] = Await.result(userNamesFuture, 10.seconds)
       log.info(s"users: $userNames")
-      println(s"users: $userNames")
     }
 
-
-    // TODO - use async test
     "retrieve by plain sql list 2" in {
       val userNamesFuture: Future[Seq[String]] = UsersService.getPlain()
 
