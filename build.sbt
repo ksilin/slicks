@@ -19,6 +19,7 @@ libraryDependencies ++= {
     "com.typesafe.slick" %% "slick"                                % slickVersion,
     "com.typesafe.slick" %% "slick-codegen"                        % slickVersion,
     "org.slf4j"          %  "slf4j-nop"                            % "1.6.4",
+    "ch.qos.logback"    % "logback-classic"                        % "1.1.3",
     "org.postgresql"     %  "postgresql"                           % "9.4-1201-jdbc41",
     "org.mindrot"        %  "jbcrypt"                              % "0.3m",
     "org.flywaydb"       %  "flyway-core"                          % "3.2.1",
@@ -49,7 +50,7 @@ val url = "jdbc:postgresql://localhost/test"
 val jdbcDriver = "org.postgresql.Driver"
   val slickDriver =  "slick.driver.PostgresDriver"
   val pkg = "com.example"
-  val user = appProperties.value.getString("")//  "psql_app"
+  val user = "psql_app" // appProperties.value.getString("")
   val password = "app_psql_pass"
   toError(r.run("slick.codegen.SourceCodeGenerator", cp.files, Array(slickDriver, jdbcDriver, url, outputDir, pkg, user, password), s.log))
   val fname = outputDir + "/demo/Tables.scala"

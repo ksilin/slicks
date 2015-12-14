@@ -30,9 +30,11 @@ class DragonsServiceDbTest extends BaseDbTest with ScalaFutures {
     "retrieve dragons stream" in {
       val dragons: DatabasePublisher[DragonEntity] = DragonsService.getDragonsStream()
 
-      val printFuture = Source(dragons).runForeach( u => log.info(s"dragon: $u"))
+      val count: Future[Int] = Source(dragons).runFold(0)((cnt, _) => cnt + 1)
 
-      Await.result(printFuture, 10.seconds)
+      count map {c: Int => c should be(2) }
+      val res = Await.result(count, 10.seconds)
+      res should be(5)
     }
 
     "retrieve and test async" in {

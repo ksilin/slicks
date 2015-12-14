@@ -62,7 +62,19 @@ with DragonEntityTable with TokenEntityTable {
     //Venom    0
     //Jaw Strength  6
     // Stealth  22
-    DragonEntity(Some(4), " Barf & Belch", "Hideous Zippleback", 10, 14)
+    DragonEntity(Some(4), " Barf & Belch", "Hideous Zippleback", 10, 14),
+
+      //    http://howtotrainyourdragon.wikia.com/wiki/Monstrous_Nightmare
+      //Attack   15
+      //Speed 16
+      //Armor 12
+      //Firepower 15
+      //Shot Limit  10
+      //Venom    0
+      //Jaw Strength  6
+      // Stealth  9
+      DragonEntity(Some(5), " Hookfang", "Monstrous_Nightmare", 16, 15)
+
   )
 
   val testTokens = Seq(
