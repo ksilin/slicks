@@ -6,6 +6,8 @@ version       := "1.0.0"
 scalaVersion  := "2.11.7"
 scalacOptions := Seq("-unchecked", "-feature", "-deprecation", "-encoding", "utf8")
 
+resolvers += "Underscore Bintray" at "https://dl.bintray.com/underscoreio/libraries"
+
 libraryDependencies ++= {
   val akkaStreamV      = "2.0-M2"
   val scalaTestV       = "3.0.0-M12"
@@ -23,6 +25,8 @@ libraryDependencies ++= {
     "org.postgresql"     %  "postgresql"                           % "9.4-1201-jdbc41",
     "org.mindrot"        %  "jbcrypt"                              % "0.3m",
     "org.flywaydb"       %  "flyway-core"                          % "3.2.1",
+    "com.chuusai"        %% "shapeless" % "2.2.5",
+    "io.underscore"      %% "slickless" % "0.1.1",
     "org.scalatest"      %% "scalatest"                            % scalaTestV       % "it,test",
     "org.scalamock"      %% "scalamock-scalatest-support"          % scalaMockV       % "it,test",
     "com.typesafe.akka"  %% "akka-http-testkit-experimental"       % akkaStreamV      % "it,test"

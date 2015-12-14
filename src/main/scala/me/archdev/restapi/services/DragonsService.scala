@@ -4,7 +4,6 @@ import me.archdev.restapi.models.db.{DragonEntityTable, UserEntityTable}
 import me.archdev.restapi.models.{DragonEntityUpdate, DragonEntity, UserEntityUpdate, UserEntity}
 import org.mindrot.jbcrypt.BCrypt
 import slick.backend.DatabasePublisher
-import slick.driver
 import slick.profile.SqlStreamingAction
 
 import scala.concurrent.ExecutionContext.Implicits.global
