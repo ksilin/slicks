@@ -31,12 +31,12 @@ trait RidersService extends RiderEntityTable {
   def createRider(rider: riderHList): Future[riderHList] = db.run(riders returning riders += rider)
 
   // TODO - how do I express an entity update with an HList?
-  def updateRider(id: Long, RiderUpdate: RiderEntityUpdate): Future[Option[RiderEntity]] = getRiderById(id).flatMap {
-    case Some(rider) =>
-      val updatedRider = RiderUpdate.merge(rider)
-      db.run(riders.filter(_.id === id).update(updatedRider)).map(_ => Some(updatedRider))
-    case None => Future.successful(None)
-  }
+//  def updateRider(id: Long, RiderUpdate: RiderEntityUpdate): Future[Option[RiderEntity]] = getRiderById(id).flatMap {
+//    case Some(rider) =>
+//      val updatedRider = RiderUpdate.merge(rider)
+//      db.run(riders.filter(_.id === id).update(updatedRider)).map(_ => Some(updatedRider))
+//    case None => Future.successful(None)
+//  }
 
   def deleteRider(id: Long): Future[Int] = db.run(riders.filter(_.id === id).delete)
 

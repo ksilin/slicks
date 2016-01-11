@@ -24,7 +24,9 @@ trait UsersService extends UserEntityTable {
     db.run(query)
   }
 
-  def getUserById(id: Long): Future[Option[UserEntity]] = db.run(users.filter(_.id === id).result.headOption)
+  def getUserById(id: Long): Future[Option[UserEntity]] = {
+    val filter: Query[Users, UserEntity, Seq] = users.filter(_.id === id)
+    db.run(filter.result.headOption)}
 
   def getUserByLogin(login: String): Future[Option[UserEntity]] = db.run(users.filter(_.username === login).result.headOption)
 

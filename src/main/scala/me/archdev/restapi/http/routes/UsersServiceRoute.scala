@@ -23,7 +23,7 @@ trait UsersServiceRoute extends UsersService with BaseServiceRoute with Security
     } ~
       pathPrefix("me") {
         pathEndOrSingleSlash {
-          authenticate { loggedUser =>
+          authenticate { (loggedUser: UserEntity) =>
             get {
               complete(loggedUser)
             } ~
